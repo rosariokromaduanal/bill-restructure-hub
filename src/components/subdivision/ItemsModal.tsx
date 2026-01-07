@@ -1,0 +1,82 @@
+import { useState } from "react";
+import { X } from "lucide-react";
+import { ItemsTable } from "./ItemsTable";
+import { ItemPartida } from "@/types/subdivision";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+
+interface ItemsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  items: ItemPartida[];
+  onItemsAdded: (items: ItemPartida[]) => void;
+}
+
+/**
+ * Modal para seleccionar items y crear subdivisiones
+ * Se abre al dar click en "Subdividir" y se cierra al dar click en "Agregar"
+ */
+export function ItemsModal({ isOpen, onClose, items, onItemsAdded }: ItemsModalProps) {
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [parcialItems, setParcialItems] = useState<Record<string, boolean>>({});
+
+  const handleParcialChange = (itemId: string, isParcial: boolean) => {
+    setParcialItems((prev) => ({
+      ...prev,
+      [itemId]: isParcial,
+    }));
+  };
+
+  const handleAgregar = () => {
+    // Filtrar los items seleccionados
+    const itemsToAdd = items.filter((item) =>
+      selectedItems.includes(item.objectidproductos)
+    );
+    
+    // Notificar al padre los items agregados
+    onItemsAdded(itemsToAdd);
+    
+    // Limpiar selección
+    setSelectedItems([]);
+    setParcialItems({});
+    
+    // Cerrar modal
+    onClose();
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden p-0">
+        <DialogHeader className="p-4 border-b border-border flex flex-row items-center justify-between">
+          <DialogTitle className="text-lg font-semibold">
+            Seleccionar Items para Subdivisión
+          </DialogTitle>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <X size={20} />
+          </Button>
+        </DialogHeader>
+        
+        <div className="overflow-auto max-h-[calc(90vh-80px)]">
+          <ItemsTable
+            items={items}
+            selectedItems={selectedItems}
+            onSelectionChange={setSelectedItems}
+            onParcialChange={handleParcialChange}
+            parcialItems={parcialItems}
+            onAgregar={handleAgregar}
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
