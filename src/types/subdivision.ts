@@ -1,0 +1,185 @@
+// Tipos TypeScript para el modelo de subdivisión de facturas
+
+export interface ItemPartida {
+  sec: number;
+  objectidproductos: string;
+  numeropartida: number;
+  numeropartepartida: string;
+  cantidadcomercialpartida: number;
+  unidadmedidacomercialpartida: string;
+  descripcionpartepartidaoriginal: string;
+  valorfacturapartida: number;
+  monedafacturapartida: string;
+  valordolarespartida: number;
+  monedavalordolarespartida: string;
+  valormercanciapartida: number;
+  monedamercanciapartida: string;
+  valorunitariopartida: number;
+  monedavalorunitariopartida: string;
+  preciounitariopartida: number;
+  monedapreciounitario: string;
+  pesonetopartida: number;
+  descripcioncovepartida: string;
+  aplicadescripcioncovepartida: string;
+  descripcionpartidapedimento: string;
+  paisdestinopartida: string;
+  paisorigenpartida: string;
+  cvemetodovaloracionpartida: string;
+  ordencomprapartida: string;
+  cantidadfacturapartida: number;
+  unidadmedidafacturapartida: number;
+  fraccionarancelariapartida: string;
+  lotepartida: string;
+  numeroseriepartida: string;
+  marcapartida: string;
+  modelopartida: string;
+  submodelopartida: string;
+  kilometrajepartida: number;
+  identity: number;
+  tiposubdivision: "TOTAL" | "PARCIAL";
+  numeroparcialidad: number;
+  saldopendiente: number;
+}
+
+export interface FacturaOriginal {
+  tipooperacion: number;
+  tipocargadatos: number;
+  numerofactura: string;
+  numeroacusevalor: string;
+  fechafactura: string;
+  seriefolio: string;
+  objectcliente: string;
+  razonsocialcliente: string;
+  cvecliente: number;
+  taxidcliente: string;
+  rfccliente: string;
+  curpcliente: string;
+  iddomicilio: string;
+  secdomicilio: number;
+  domiciliofiscalcliente: string;
+  callecliente: string;
+  numeroexteriorcliente: string;
+  numerointeriorcliente: string;
+  numeroextintcliente: string;
+  codigopostalcliente: string;
+  coloniacliente: string;
+  localidadcliente: string;
+  ciudadcliente: string;
+  municipiocliente: string;
+  cveentidadfederativacliente: string;
+  entidadfederativacliente: string;
+  entidadmunicipiocliente: string;
+  cvepaiscliente: string;
+  paiscliente: string;
+  cveincoterm: string;
+  cvepaisfacturacion: string;
+  paisfacturacion: string;
+  valorfactura: number;
+  monedafactura: string;
+  valormercancia: number;
+  monedavalormercancia: string;
+  pesototal: number;
+  bultos: number;
+  ordencompra: string;
+  referenciacliente: string;
+  aplicaenajenacion: boolean;
+  aplicasubdivision: boolean;
+  razonsocialproveedor: string;
+  idproveedor: string;
+  cveproveedor: string;
+  taxidproveedor: string;
+  rfcproveedor: string;
+  curpproveedor: string;
+  iddomicilioproveedor: string;
+  secdomicilioproveedor: number;
+  domiciliofiscalproveedor: string;
+  calleproveedor: string;
+  numeroexteriorproveedor: string;
+  numerointeriorproveedor: string;
+  numeroextintproveedor: string;
+  codigopostalproveedor: string;
+  coloniaproveedor: string;
+  localidadproveedor: string;
+  ciudadproveedor: string;
+  municipioproveedor: string;
+  entidadmunicipioproveedor: string;
+  cveentidadfederativaproveedor: string;
+  entidadfederativaproveedor: string;
+  cvepaisproveedor: string;
+  paisproveedor: string;
+  cvevinculacion: number;
+  cvemetodovaloracion: number;
+  aplicacertificacion: boolean;
+  nombrecertificador: string;
+  destinatarioproveedor: boolean;
+  razonsocialdestinatario: string;
+  iddestinatario: string;
+  cvedestinatario: string;
+  taxiddestinatario: string;
+  rfcdestinatario: string;
+  curpdestinatario: string;
+  iddomiciliodestinatario: string;
+  secdomiciliodestinatario: number;
+  domiciliofiscaldestinatario: string;
+  calledestinatario: string;
+  numeroexteriordestinatario: string;
+  numerointeriordestinatario: string;
+  numeroextintdestinatario: string;
+  codigopostaldestinatario: string;
+  coloniadestinatario: string;
+  localidaddestinatario: string;
+  ciudaddestinatario: string;
+  municipiodestinatario: string;
+  entidadmunicipiodestinatario: string;
+  cveentidadfederativadestinatario: string;
+  entidadfederativadestinatario: string;
+  cvepaisdestinatario: string;
+  paisdestinatario: string;
+  items: ItemPartida[];
+  fletes: number;
+  monedaflete: string;
+  seguro: number;
+  monedaseguro: string;
+  embalajes: number;
+  monedaembalaje: string;
+  otrosincrementables: number;
+  monedaotrosincrementables: string;
+  descuentos: number;
+  monedadescuentos: string;
+}
+
+export interface MasInformacion {
+  fechafactura: string;
+  numeroacusevalor: string;
+  incoterm: string;
+  cierresubdivision: {
+    tipo: string;
+    fecha: string;
+    motivo: string;
+  };
+}
+
+export interface DetalleSubdivision {
+  sec: number;
+  clave: string;
+  descripciongeneral: string;
+  numeropedimento: string;
+  fechaasociacionpedimento: string;
+  estado: number;
+  itemsasociados: ItemPartida[];
+}
+
+export interface SubdivisionData {
+  _id: string;
+  idfacturaoriginal: string;
+  numerofactura: string;
+  cliente: string;
+  proveedor: string;
+  porcentajeutilizadofactura: number;
+  montoutilizadofactura: string;
+  totalfactura: string;
+  ultimasubdivision: string;
+  masinformacion: MasInformacion;
+  facturaoriginal: FacturaOriginal;
+  detallesubdivision: DetalleSubdivision[];
+}
