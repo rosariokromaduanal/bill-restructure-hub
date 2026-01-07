@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronUp, ChevronDown, Ship } from "lucide-react";
+import { ChevronUp, ChevronDown, Lock, LockOpen } from "lucide-react";
 import { ProgressChart } from "./ProgressChart";
 import { Button } from "@/components/ui/button";
 import { SubdivisionData } from "@/types/subdivision";
@@ -20,27 +20,31 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
   const montoUtilizado = data.montoutilizadofactura.split(" ")[0];
   const totalFactura = data.totalfactura.split(" ")[0];
 
+  const isComplete = data.porcentajeutilizadofactura >= 100;
+
   return (
     <div className="bg-card rounded-lg border border-border shadow-card p-6">
       <div className="flex flex-col lg:flex-row gap-6">
-        {/* Gráfica de progreso */}
-        <div className="flex-shrink-0">
+        {/* LADO IZQUIERDO - Gráfica y número de factura */}
+        <div className="flex flex-col items-center lg:items-start gap-4">
           <ProgressChart percentage={data.porcentajeutilizadofactura} />
+          <div className="text-center lg:text-left">
+            <h2 className="text-3xl font-light text-muted-foreground">
+              Factura
+            </h2>
+            <p className="text-2xl text-muted-foreground">aplicada</p>
+            <p className="text-2xl font-semibold text-secondary mt-1">
+              {data.numerofactura.replace("E007355E24", "2024/4607")}
+            </p>
+          </div>
         </div>
 
-        {/* Información de la factura */}
+        {/* Línea divisoria vertical */}
+        <div className="hidden lg:block w-px bg-border self-stretch" />
+
+        {/* LADO DERECHO - Información del cliente y datos */}
         <div className="flex-1 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-            <div>
-              <h2 className="text-3xl font-light text-muted-foreground">
-                Factura
-              </h2>
-              <p className="text-2xl text-muted-foreground">aplicada</p>
-              <p className="text-2xl font-semibold text-secondary mt-1">
-                {data.numerofactura.replace("E007355E24", "2024/4607")}
-              </p>
-            </div>
-
             {/* Cliente y proveedor */}
             <div className="space-y-3 text-sm">
               <div>
@@ -53,9 +57,13 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
               </div>
             </div>
 
-            {/* Indicador de días */}
+            {/* Indicador de días con candado */}
             <div className="flex items-center gap-2 text-muted-foreground">
-              <Ship size={24} />
+              {isComplete ? (
+                <Lock size={24} className="text-accent" />
+              ) : (
+                <LockOpen size={24} />
+              )}
               <span className="text-2xl font-semibold">2 d</span>
             </div>
           </div>
@@ -103,7 +111,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
           {/* Montos y botón subdividir */}
           <div className="flex flex-col sm:flex-row items-center justify-end gap-4 pt-2">
             <div className="text-right">
-              <span className="text-2xl font-bold text-accent">
+              <span className="text-2xl font-bold text-secondary">
                 ${montoUtilizado}
               </span>
               <span className="text-lg text-muted-foreground">
@@ -112,7 +120,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
             </div>
             <Button
               onClick={onSubdividir}
-              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-6"
+              className="bg-chart hover:bg-chart/90 text-chart-foreground px-6"
             >
               Subdividir
             </Button>
