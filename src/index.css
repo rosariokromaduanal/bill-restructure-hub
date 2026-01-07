@@ -48,8 +48,8 @@
 
     --radius: 0.5rem;
 
-    /* Sidebar */
-    --sidebar-background: 263 63% 24%;
+    /* Sidebar - Negro */
+    --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 254 40% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -58,10 +58,10 @@
     --sidebar-border: 254 40% 35%;
     --sidebar-ring: 254 40% 50%;
 
-    /* Header gradient */
-    --header-start: 263 63% 24%;
+    /* Header gradient - vino al inicio, morado al final */
+    --header-start: 323 72% 28%;
     --header-middle: 254 40% 50%;
-    --header-end: 323 72% 28%;
+    --header-end: 263 63% 24%;
   }
 
   .dark {
