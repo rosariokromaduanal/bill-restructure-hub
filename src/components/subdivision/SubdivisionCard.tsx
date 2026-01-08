@@ -25,12 +25,12 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
   const tienePedimento = subdivision.numeropedimento && subdivision.numeropedimento.length > 0;
 
   return (
-    <div className={`mb-3 bg-card border border-border shadow-sm transition-all duration-200 hover:shadow-md ${isExpanded ? 'rounded-none' : 'rounded-none'}`}>
+    <div className={`mb-3 bg-card border border-border shadow-sm transition-all duration-200 hover:shadow-md rounded-l-full`}>
       {/* Contenido principal de la tarjeta */}
       <div className="flex flex-col sm:flex-row items-center gap-2 p-1 pl-0">
         {/* Badge de subdivisión con borde izquierdo #634db0 */}
         <div
-          className={`min-w-[60px] text-center py-5 px-5 text-xs text-white rounded-l-full}`}
+          className={`min-w-[60px] text-center py-3 px-5 text-xs text-white rounded-l-full  }`}
           style={{ backgroundColor: "#634DB0" }}
         >
           {subdivision.clave}
