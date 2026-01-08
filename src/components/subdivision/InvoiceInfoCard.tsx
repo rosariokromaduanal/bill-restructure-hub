@@ -58,7 +58,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
               ) : (
                 <LockOpen size={26} fill="hsl(var(--secondary))" className="text-secondary" />
               )}
-              <span className="text-2xl text-secondary">2 d</span>
+              <span className="text-3xl text-secondary">2 d</span>
             </div>
           </div>
 
