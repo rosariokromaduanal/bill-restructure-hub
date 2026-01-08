@@ -25,12 +25,12 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
   const tienePedimento = subdivision.numeropedimento && subdivision.numeropedimento.length > 0;
 
   return (
-    <div className={`mb-3 bg-card border border-border shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md ${isExpanded ? 'rounded-lg' : 'rounded-full'}`}>
+    <div className={`mb-3 bg-card border border-border shadow-sm transition-all duration-200 hover:shadow-md ${isExpanded ? 'rounded-none' : 'rounded-full'}`}>
       {/* Contenido principal de la tarjeta */}
       <div className="flex flex-col sm:flex-row items-center gap-2 p-1 pl-0">
         {/* Badge de subdivisión con borde izquierdo #634db0 */}
-        <div 
-          className="min-w-[60px] text-center py-2 px-3 rounded-full font-semibold text-xs text-white"
+        <div
+          className={`min-w-[60px] text-center py-2 px-3 text-xs text-white ${isExpanded ? 'rounded-l-full' : 'rounded-full'}`}
           style={{ backgroundColor: "#634DB0" }}
         >
           {subdivision.clave}
@@ -64,10 +64,8 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center gap-1 rounded-full text-foreground"
+            className="flex items-center gap-1 rounded-full text-foreground transition-opacity hover:opacity-70"
             style={{ backgroundColor: "#e0e0e0" }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#bdbdbd"}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#e0e0e0"}
           >
             {isExpanded ? (
               <>Ver menos <ChevronUp size={16} /></>

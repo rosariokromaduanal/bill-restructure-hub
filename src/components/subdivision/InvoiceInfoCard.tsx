@@ -25,15 +25,16 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card p-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* LADO IZQUIERDO - 50% - Gráfica y número de factura lado a lado */}
-        <div className="flex items-center justify-center gap-6 lg:border-r lg:border-border lg:pr-6">
-          <ProgressChart percentage={data.porcentajeutilizadofactura} />
-          <div className="text-left">
-            <p className="text-lg text-muted-foreground">Factura</p>
-            <p className="text-lg text-muted-foreground">aplicada</p>
-            <p className="text-xl font-semibold mt-1" style={{ color: "#79145C" }}>
+        {/* LADO IZQUIERDO - 50% - Gráfica y número de factura */}
+        <div className="flex flex-col items-center justify-center gap-3 lg:border-r lg:border-border lg:pr-6">
+          <div className="flex items-center gap-2">
+            <p className="text-2xl" style={{ color: "#79145C" }}>
               {data.numerofactura.replace("E007355E24", "2024/4607")}
             </p>
+          </div>
+          <ProgressChart percentage={data.porcentajeutilizadofactura} />
+          <div className="text-center">
+            <p className="text-xl"><span className="font-bold">Factura</span> aplicada</p>
           </div>
         </div>
 
@@ -55,11 +56,11 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
             {/* Indicador de días con candado */}
             <div className="flex items-center gap-2">
               {isComplete ? (
-                <Lock size={24} className="text-secondary" />
+                <Lock size={26} fill="hsl(var(--secondary))" className="text-secondary" />
               ) : (
-                <LockOpen size={24} className="text-secondary" />
+                <LockOpen size={26} fill="hsl(var(--secondary))" className="text-secondary" />
               )}
-              <span className="text-2xl font-semibold text-secondary">2 d</span>
+              <span className="text-2xl text-secondary">2 d</span>
             </div>
           </div>
 
@@ -90,17 +91,18 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
           )}
 
           {/* Botón ver más/menos */}
-          <div className="flex justify-center">
+          <div className="flex justify-start">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setShowMoreInfo(!showMoreInfo)}
-              className="text-muted-foreground hover:text-foreground rounded-full"
+              className="text-muted-foreground rounded-full transition-opacity hover:opacity-70"
+              style={{ backgroundColor: "#e0e0e0" }}
             >
               {showMoreInfo ? (
                 <>Ver menos <ChevronUp className="ml-1" size={16} /></>
               ) : (
-                <>Ver más <ChevronDown className="ml-1" size={16} /></>
+                <span className="italic">Más información <ChevronDown className="ml-1 inline" size={16} /></span>
               )}
             </Button>
           </div>
@@ -108,7 +110,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
           {/* Montos y botón subdividir */}
           <div className="flex flex-col sm:flex-row items-center justify-end gap-4 pt-2">
             <div className="text-right">
-              <span className="text-2xl font-bold text-secondary">
+              <span className="text-3xl text-secondary">
                 ${montoUtilizado}
               </span>
               <span className="text-lg text-muted-foreground">
