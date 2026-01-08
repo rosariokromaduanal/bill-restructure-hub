@@ -84,7 +84,7 @@ export function SubdivisionsList({ subdivisions }: SubdivisionsListProps) {
           <Button
             variant="ghost"
             onClick={() => setVisibleCount((prev) => prev + 5)}
-            className="text-secondary hover:text-secondary/80"
+            className="text-secondary"
           >
             Mostrar siguientes
           </Button>
