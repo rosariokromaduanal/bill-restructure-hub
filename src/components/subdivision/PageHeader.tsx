@@ -38,7 +38,7 @@ export function GeneralesSection({ onToggle, isExpanded }: GeneralesSectionProps
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-0.5 h-6 rounded" style={{ backgroundColor: "#E91E63" }} />
-          <span className="font-bold text-foreground">Generales</span>
+          <span className="font-bold text-foreground text-2xl">Generales</span>
         </div>
         <Button
           variant="ghost"
