@@ -29,7 +29,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
         <div className="flex items-center justify-center gap-6 lg:border-r lg:border-border lg:pr-6">
           <ProgressChart percentage={data.porcentajeutilizadofactura} />
           <div className="text-center">
-            <p className="text-4xl" style={{ color: "#79145C" }}>
+            <p className="text-4xl italic" style={{ color: "#79145C" }}>
               {data.numerofactura.replace("E007355E24", "2024/4607")}
             </p>
             <p className="text-3xl"><span className="font-bold">Factura</span><br> aplicada</p>
@@ -108,10 +108,10 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
           {/* Montos y botón subdividir */}
           <div className="flex flex-col sm:flex-row items-center justify-end gap-4 pt-2">
             <div className="text-right">
-              <span className="text-3xl text-secondary">
+              <span className="text-3xl italic text-secondary">
                 ${montoUtilizado}
               </span>
-              <span className="text-lg text-muted-foreground">
+              <span className="text-3xl text-muted-foreground">
                 {" "}/${totalFactura}
               </span>
             </div>
