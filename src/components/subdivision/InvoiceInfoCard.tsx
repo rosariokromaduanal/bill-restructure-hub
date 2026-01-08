@@ -28,7 +28,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
         {/* LADO IZQUIERDO - 50% - Gráfica y número de factura */}
         <div className="flex items-center justify-center gap-6 lg:border-r lg:border-border lg:pr-6">
           <ProgressChart percentage={data.porcentajeutilizadofactura} />
-          <div className="">
+          <div className="pl-5">
             <p className="text-4xl italic" style={{ color: "#79145C" }}>
               {data.numerofactura.replace("E007355E24", "2024/4607")}
             </p>
