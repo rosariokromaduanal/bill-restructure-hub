@@ -11,7 +11,7 @@ interface InvoiceInfoCardProps {
 
 /**
  * Card de información general de la factura
- * Muestra gráfica de progreso, datos del cliente/proveedor y botón subdividir
+ * Layout 50/50: Lado izquierdo gráfica, lado derecho datos
  */
 export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
   const [showMoreInfo, setShowMoreInfo] = useState(true);
@@ -23,27 +23,24 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
   const isComplete = data.porcentajeutilizadofactura >= 100;
 
   return (
-    <div className="bg-card rounded-lg border border-border shadow-card p-6">
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* LADO IZQUIERDO - Gráfica y número de factura */}
-        <div className="flex flex-col items-center lg:items-start gap-4">
+    <div className="bg-card rounded-2xl border border-border shadow-card p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* LADO IZQUIERDO - 50% - Gráfica y número de factura */}
+        <div className="flex flex-col items-center justify-center gap-4 lg:border-r lg:border-border lg:pr-6">
           <ProgressChart percentage={data.porcentajeutilizadofactura} />
-          <div className="text-center lg:text-left">
-            <h2 className="text-3xl font-light text-muted-foreground">
+          <div className="text-center">
+            <h2 className="text-2xl font-light text-muted-foreground">
               Factura
             </h2>
-            <p className="text-2xl text-muted-foreground">aplicada</p>
-            <p className="text-2xl font-semibold text-secondary mt-1">
+            <p className="text-xl text-muted-foreground">aplicada</p>
+            <p className="text-xl font-semibold mt-1" style={{ color: "#79145C" }}>
               {data.numerofactura.replace("E007355E24", "2024/4607")}
             </p>
           </div>
         </div>
 
-        {/* Línea divisoria vertical */}
-        <div className="hidden lg:block w-px bg-border self-stretch" />
-
-        {/* LADO DERECHO - Información del cliente y datos */}
-        <div className="flex-1 space-y-4">
+        {/* LADO DERECHO - 50% - Información del cliente y datos */}
+        <div className="flex flex-col justify-between space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
             {/* Cliente y proveedor */}
             <div className="space-y-3 text-sm">
@@ -58,13 +55,13 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
             </div>
 
             {/* Indicador de días con candado */}
-            <div className="flex items-center gap-2 text-muted-foreground">
+            <div className="flex items-center gap-2">
               {isComplete ? (
-                <Lock size={24} className="text-accent" />
+                <Lock size={24} className="text-secondary" />
               ) : (
-                <LockOpen size={24} />
+                <LockOpen size={24} className="text-secondary" />
               )}
-              <span className="text-2xl font-semibold">2 d</span>
+              <span className="text-2xl font-semibold text-secondary">2 d</span>
             </div>
           </div>
 
@@ -98,7 +95,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
               variant="ghost"
               size="sm"
               onClick={() => setShowMoreInfo(!showMoreInfo)}
-              className="text-muted-foreground hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground rounded-full"
             >
               {showMoreInfo ? (
                 <>Ver menos <ChevronUp className="ml-1" size={16} /></>
@@ -120,7 +117,8 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
             </div>
             <Button
               onClick={onSubdividir}
-              className="bg-chart hover:bg-chart/90 text-chart-foreground px-6"
+              className="rounded-full px-6"
+              style={{ backgroundColor: "#79145C" }}
             >
               Subdividir
             </Button>

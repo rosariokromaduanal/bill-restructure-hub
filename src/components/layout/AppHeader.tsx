@@ -1,65 +1,82 @@
-import { Search, ChevronDown, User } from "lucide-react";
+import { useState } from "react";
+import { Search, ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import logoSynapsis from "@/assets/logo_synapsis_white.png";
+
+const offices = [
+  "Veracruz",
+  "CDMX",
+  "Tuxpan",
+  "Laredo",
+  "Manzanillo",
+  "Altamira",
+  "Tampico",
+];
 
 /**
  * Header principal de la aplicación
- * Contiene logo, búsqueda, selector de ubicación y usuario
+ * Contiene logo, búsqueda funcional, selector de ubicación
  */
 export function AppHeader() {
+  const [selectedOffice, setSelectedOffice] = useState("Veracruz");
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchValue.trim()) {
+      console.log("Buscando factura:", searchValue);
+      // Aquí se conectará con MongoDB más adelante
+    }
+  };
+
   return (
-    <header className="header-gradient h-14 flex items-center justify-between px-4 fixed top-0 left-[60px] right-0 z-40">
-      {/* Logo y menú hamburguesa */}
+    <header className="header-gradient h-12 flex items-center justify-between px-4 fixed top-0 left-[60px] right-0 z-40">
+      {/* Logo y búsqueda */}
       <div className="flex items-center gap-4">
-        <button className="text-primary-foreground/80 hover:text-primary-foreground">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-            <rect x="0" y="2" width="4" height="4" rx="1" />
-            <rect x="6" y="2" width="4" height="4" rx="1" />
-            <rect x="0" y="8" width="4" height="4" rx="1" />
-            <rect x="6" y="8" width="4" height="4" rx="1" />
-            <rect x="0" y="14" width="4" height="4" rx="1" />
-            <rect x="6" y="14" width="4" height="4" rx="1" />
-          </svg>
-        </button>
-
         {/* Logo Synapsis */}
-        <div className="flex items-center gap-2">
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="text-primary-foreground">
-            <circle cx="14" cy="14" r="12" stroke="currentColor" strokeWidth="2" />
-            <path d="M9 14C9 11.2386 11.2386 9 14 9C16.7614 9 19 11.2386 19 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            <circle cx="14" cy="14" r="3" fill="currentColor" />
-          </svg>
-          <span className="text-primary-foreground font-semibold text-lg">Synapsis</span>
-        </div>
+        <img src={logoSynapsis} alt="Synapsis" className="h-5 object-contain" />
 
-        {/* Barra de búsqueda */}
-        <div className="relative ml-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-primary-foreground/60" size={16} />
+        {/* Barra de búsqueda funcional */}
+        <form onSubmit={handleSearch} className="relative">
           <Input
             type="text"
             placeholder="Buscar factura"
-            className="w-64 pl-10 bg-secondary/30 border-0 text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-1 focus-visible:ring-primary-foreground/30"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            className="w-48 md:w-64 pl-3 pr-10 h-8 bg-white/20 border-0 rounded-full text-primary-foreground placeholder:text-primary-foreground/60 focus-visible:ring-1 focus-visible:ring-primary-foreground/30 text-sm"
           />
-        </div>
+          <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2">
+            <Search className="text-primary-foreground/60 hover:text-primary-foreground transition-colors" size={14} />
+          </button>
+        </form>
       </div>
 
-      {/* Selector de ubicación y usuario */}
-      <div className="flex items-center gap-6">
-        {/* Selector de ubicación */}
-        <button className="flex items-center gap-2 bg-secondary/50 hover:bg-secondary/70 px-4 py-2 rounded-md transition-colors">
-          <span className="text-primary-foreground text-sm font-medium">Veracruz</span>
-          <ChevronDown className="text-primary-foreground" size={16} />
-        </button>
-
-        {/* Información del usuario */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center overflow-hidden">
-            <User className="text-muted-foreground" size={18} />
-          </div>
-          <span className="text-primary-foreground text-sm font-medium hidden md:block">
-            Pedro Bautista Méndez
-          </span>
-        </div>
-      </div>
+      {/* Selector de ubicación */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-1.5 rounded-full transition-colors">
+            <span className="text-primary-foreground text-sm font-medium">{selectedOffice}</span>
+            <ChevronDown className="text-primary-foreground" size={14} />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-40">
+          {offices.map((office) => (
+            <DropdownMenuItem
+              key={office}
+              onClick={() => setSelectedOffice(office)}
+              className={office === selectedOffice ? "bg-muted" : ""}
+            >
+              {office}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </header>
   );
 }
