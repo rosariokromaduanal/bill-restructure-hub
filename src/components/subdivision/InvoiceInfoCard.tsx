@@ -26,15 +26,13 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
     <div className="bg-card rounded-2xl border border-border shadow-card p-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* LADO IZQUIERDO - 50% - Gráfica y número de factura */}
-        <div className="flex flex-col items-center justify-center gap-3 lg:border-r lg:border-border lg:pr-6">
-          <div className="flex items-center gap-2">
-            <p className="text-2xl" style={{ color: "#79145C" }}>
-              {data.numerofactura.replace("E007355E24", "2024/4607")}
-            </p>
-          </div>
+        <div className="flex items-center justify-center gap-6 lg:border-r lg:border-border lg:pr-6">
           <ProgressChart percentage={data.porcentajeutilizadofactura} />
           <div className="text-center">
-            <p className="text-xl"><span className="font-bold">Factura</span> aplicada</p>
+            <p className="text-4xl" style={{ color: "#79145C" }}>
+              {data.numerofactura.replace("E007355E24", "2024/4607")}
+            </p>
+            <p className="text-3xl"><span className="font-bold">Factura</span><br> aplicada</p>
           </div>
         </div>
 
@@ -66,7 +64,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
 
           {/* Información adicional (colapsable) */}
           {showMoreInfo && (
-            <div className="flex flex-col gap-3 pt-2 animate-fade-in">
+            <div className="flex flex-col gap-3 animate-fade-in">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <span className="text-muted-foreground/70 text-xs">Acuse de valor</span>
