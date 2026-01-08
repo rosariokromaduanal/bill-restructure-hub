@@ -32,7 +32,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
             <p className="text-4xl italic" style={{ color: "#79145C" }}>
               {data.numerofactura.replace("E007355E24", "2024/4607")}
             </p>
-            <p className="text-3xl"><span className="font-bold">Factura</span><br> aplicada</p>
+            <p className="text-3xl"><span className="font-bold">Factura</span></p>br> aplicada</p>
           </div>
         </div>
 
