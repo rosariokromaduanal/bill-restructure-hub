@@ -1,4 +1,4 @@
-import { Plus, RotateCcw, Trash2, ChevronDown, Download, Printer, Mail } from "lucide-react";
+import { Plus, RotateCcw, Trash2, Archive, ChevronDown, Download, Printer, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,61 +9,66 @@ import {
 
 /**
  * Grupo de botones de acción principal
- * Guardar, Restaurar, Eliminar y menú de Acciones
+ * Guardar (+), Deshacer, Eliminar/Archivar y menú de Acciones
+ * Todos los botones redondeados y unidos
  */
 export function ActionButtons() {
   return (
-    <div className="flex items-center gap-0 rounded-md overflow-hidden border border-primary/20">
-      {/* Botón Guardar con + */}
+    <div className="flex items-center rounded-full overflow-hidden border border-border shadow-sm">
+      {/* Botón Guardar con + (color #634DB0) */}
       <Button
         variant="default"
         size="sm"
-        className="rounded-none bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-1 px-3"
+        className="rounded-none border-r border-white/20 flex items-center gap-1 px-4 h-9"
+        style={{ backgroundColor: "#634DB0" }}
       >
         <Plus size={16} />
-        <span>Guardar</span>
+        <span className="hidden sm:inline">Guardar</span>
       </Button>
 
-      {/* Botón Restaurar */}
+      {/* Botón Deshacer */}
       <Button
         variant="ghost"
         size="sm"
-        className="rounded-none text-muted-foreground hover:text-foreground hover:bg-muted/50 px-3"
+        className="rounded-none text-muted-foreground hover:text-foreground hover:bg-muted/50 px-3 h-9 border-r border-border"
+        title="Deshacer"
       >
         <RotateCcw size={16} />
       </Button>
 
-      {/* Botón Eliminar */}
+      {/* Botón Eliminar/Archivar */}
       <Button
         variant="ghost"
         size="sm"
-        className="rounded-none text-muted-foreground hover:text-destructive hover:bg-muted/50 px-3"
+        className="rounded-none text-muted-foreground hover:text-destructive hover:bg-muted/50 px-3 h-9 border-r border-border"
+        title="Eliminar o archivar"
       >
         <Trash2 size={16} />
       </Button>
 
-      {/* Menú de Acciones */}
+      {/* Menú de Acciones (color #321761) */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="sm"
-            className="rounded-none text-muted-foreground hover:text-foreground hover:bg-muted/50 px-3 flex items-center gap-1"
+            className="rounded-none hover:bg-muted/50 px-4 h-9 flex items-center gap-1 text-primary-foreground"
+            style={{ backgroundColor: "#321761" }}
           >
-            <span>Acciones</span>
+            <span className="text-sm">Acciones</span>
             <ChevronDown size={14} />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-48">
-          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+        <DropdownMenuContent align="end" className="w-48 rounded-xl">
+          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer rounded-lg">
             <Download size={16} />
             <span>Descargar</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer rounded-lg">
             <Printer size={16} />
             <span>Imprimir</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
+          <DropdownMenuItem className="flex items-center gap-2 cursor-pointer rounded-lg">
             <Mail size={16} />
             <span>Enviar por correo</span>
           </DropdownMenuItem>

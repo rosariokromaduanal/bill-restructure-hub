@@ -12,12 +12,14 @@ interface ItemsTableProps {
   onSelectionChange: (items: string[]) => void;
   onParcialChange: (itemId: string, isParcial: boolean) => void;
   parcialItems: Record<string, boolean>;
+  cantidadParcial: Record<string, number>;
+  onCantidadParcialChange: (itemId: string, cantidad: number) => void;
   onAgregar: () => void;
 }
 
 /**
  * Tabla interactiva de items de la factura
- * Con selección múltiple, búsqueda y toggle de parcialidad
+ * Con selección múltiple, búsqueda, toggle de parcialidad y cantidad editable
  */
 export function ItemsTable({
   items,
@@ -25,6 +27,8 @@ export function ItemsTable({
   onSelectionChange,
   onParcialChange,
   parcialItems,
+  cantidadParcial,
+  onCantidadParcialChange,
   onAgregar
 }: ItemsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -64,14 +68,14 @@ export function ItemsTable({
     filteredItems.every((item) => selectedItems.includes(item.objectidproductos));
 
   return (
-    <div className="bg-card rounded-lg border border-border shadow-card overflow-hidden">
+    <div className="bg-card rounded-2xl border border-border shadow-card overflow-hidden">
       {/* Barra de búsqueda y acciones */}
       <div className="flex items-center justify-between p-4 border-b border-border">
         <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
-            className="text-muted-foreground hover:text-destructive"
+            className="text-muted-foreground hover:text-destructive rounded-full"
             disabled={selectedItems.length === 0}
           >
             <Trash2 size={18} />
@@ -83,7 +87,7 @@ export function ItemsTable({
               placeholder={`Buscar item 1 - ${items.length}, ${items.length}`}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-48 md:w-64 pr-10"
+              className="w-48 md:w-64 pr-10 rounded-full"
             />
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
           </div>
@@ -107,7 +111,7 @@ export function ItemsTable({
               <th>Descripción</th>
               <th>Valor mercancía</th>
               <th>Cantidad tarifa</th>
-              <th>Cantidad com...</th>
+              <th>Cantidad comercial</th>
               <th>Total mercancía</th>
               <th>Parcial</th>
             </tr>
@@ -116,6 +120,7 @@ export function ItemsTable({
             {filteredItems.map((item, index) => {
               const isSelected = selectedItems.includes(item.objectidproductos);
               const isParcial = parcialItems[item.objectidproductos] || false;
+              const cantidadActual = cantidadParcial[item.objectidproductos] ?? item.cantidadcomercialpartida;
               
               // Alternar destacar algunas filas para el efecto visual de la maqueta
               const isHighlighted = index === 1;
@@ -144,8 +149,21 @@ export function ItemsTable({
                     $ {item.valormercanciapartida.toFixed(2)}
                   </td>
                   <td>{item.cantidadfacturapartida.toFixed(3)}</td>
-                  <td>
-                    {item.cantidadcomercialpartida} {item.unidadmedidacomercialpartida}
+                  <td onClick={(e) => e.stopPropagation()}>
+                    {/* Input dinámico de cantidad comercial */}
+                    <Input
+                      type="number"
+                      value={cantidadActual}
+                      onChange={(e) => onCantidadParcialChange(item.objectidproductos, parseFloat(e.target.value) || 0)}
+                      disabled={!isParcial}
+                      className={`w-20 h-8 text-center rounded-lg ${
+                        isParcial 
+                          ? "border-secondary bg-secondary/10" 
+                          : "border-border bg-muted/30 cursor-not-allowed"
+                      }`}
+                      min={0}
+                      max={item.cantidadcomercialpartida}
+                    />
                   </td>
                   <td>$ {item.valormercanciapartida.toFixed(2)}</td>
                   <td onClick={(e) => e.stopPropagation()}>
@@ -175,7 +193,7 @@ export function ItemsTable({
       <div className="flex justify-end p-4 border-t border-border">
         <Button
           onClick={onAgregar}
-          className="bg-accent hover:bg-accent/90 text-accent-foreground"
+          className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-6"
           disabled={selectedItems.length === 0}
         >
           Agregar

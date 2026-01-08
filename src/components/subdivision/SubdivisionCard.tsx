@@ -8,8 +8,8 @@ interface SubdivisionCardProps {
 }
 
 /**
- * Card individual de subdivisión
- * Expandible para mostrar tabla detallada de items
+ * Card individual de subdivisión estilo cápsula
+ * Con borde izquierdo #634db0 y bordes redondeados
  */
 export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -25,11 +25,14 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
   const tienePedimento = subdivision.numeropedimento && subdivision.numeropedimento.length > 0;
 
   return (
-    <div className="subdivision-card mb-3">
+    <div className="mb-3 bg-card rounded-full border border-border shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md">
       {/* Contenido principal de la tarjeta */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4">
-        {/* Badge de subdivisión */}
-        <div className="subdivision-badge min-w-[80px] text-center">
+      <div className="flex flex-col sm:flex-row items-center gap-4 p-3 pl-0">
+        {/* Badge de subdivisión con borde izquierdo #634db0 */}
+        <div 
+          className="min-w-[100px] text-center py-3 px-4 rounded-full font-semibold text-sm text-white"
+          style={{ backgroundColor: "#634DB0" }}
+        >
           {subdivision.clave}
         </div>
 
@@ -61,7 +64,7 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-muted-foreground hover:text-foreground flex items-center gap-1"
+            className="text-muted-foreground hover:text-foreground flex items-center gap-1 rounded-full"
           >
             {isExpanded ? (
               <>Ver menos <ChevronUp size={16} /></>
@@ -74,7 +77,7 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
 
       {/* Tabla detallada de items (expandible) */}
       {isExpanded && subdivision.itemsasociados.length > 0 && (
-        <div className="border-t border-border p-4 animate-fade-in">
+        <div className="border-t border-border p-4 animate-fade-in bg-muted/10 rounded-b-2xl">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -89,7 +92,7 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
               </thead>
               <tbody>
                 {subdivision.itemsasociados.map((item, index) => {
-                  // Destacar item parcial (como en la maqueta, el item 8)
+                  // Destacar item parcial
                   const isHighlighted = item.tiposubdivision === "PARCIAL";
                   
                   return (

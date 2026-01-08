@@ -29,16 +29,19 @@
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 38%;
 
+    /* Texto secundario más claro */
+    --text-muted: 0 0% 55%;
+
     /* Accent - verde #0EA881 */
     --accent: 162 85% 36%;
     --accent-foreground: 0 0% 100%;
 
-    /* Magenta para gráfica #79145c */
+    /* Magenta para gráfica y botón subdividir #79145c */
     --chart: 323 72% 28%;
     --chart-foreground: 0 0% 100%;
 
-    /* Destructive */
-    --destructive: 0 84% 60%;
+    /* Destructive - Rojo #f44336 */
+    --destructive: 4 90% 58%;
     --destructive-foreground: 0 0% 100%;
 
     /* Bordes e inputs */
@@ -48,19 +51,19 @@
 
     --radius: 0.5rem;
 
-    /* Sidebar - Negro */
-    --sidebar-background: 0 0% 10%;
+    /* Sidebar - Negro puro #000000 */
+    --sidebar-background: 0 0% 0%;
     --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 254 40% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 254 40% 40%;
+    --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 254 40% 35%;
+    --sidebar-border: 0 0% 20%;
     --sidebar-ring: 254 40% 50%;
 
-    /* Header gradient - vino al inicio, morado al final */
+    /* Header gradient - #79145C predominante a #321761 */
     --header-start: 323 72% 28%;
-    --header-middle: 254 40% 50%;
+    --header-middle: 323 72% 28%;
     --header-end: 263 63% 24%;
   }
 
@@ -77,6 +80,7 @@
     --secondary-foreground: 0 0% 100%;
     --muted: 263 63% 20%;
     --muted-foreground: 0 0% 70%;
+    --text-muted: 0 0% 60%;
     --accent: 162 85% 40%;
     --accent-foreground: 0 0% 100%;
     --chart: 323 72% 40%;
@@ -86,13 +90,13 @@
     --border: 263 63% 20%;
     --input: 263 63% 20%;
     --ring: 254 40% 50%;
-    --sidebar-background: 263 63% 12%;
+    --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 0 0% 95%;
     --sidebar-primary: 254 40% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 254 40% 35%;
+    --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 263 63% 20%;
+    --sidebar-border: 0 0% 20%;
     --sidebar-ring: 254 40% 50%;
   }
 }
@@ -110,11 +114,12 @@
 
 /* Componentes personalizados */
 @layer components {
-  /* Header con gradiente */
+  /* Header con gradiente - #79145C predominante de izquierda a derecha terminando en #321761 */
   .header-gradient {
     background: linear-gradient(90deg, 
       hsl(var(--header-start)) 0%, 
-      hsl(var(--header-middle)) 50%, 
+      hsl(var(--header-start)) 40%, 
+      hsl(var(--header-middle)) 60%, 
       hsl(var(--header-end)) 100%
     );
   }
@@ -129,16 +134,16 @@
     transition: stroke-dashoffset 0.5s ease-in-out;
   }
 
-  /* Badge de subdivisión */
+  /* Badge de subdivisión - estilo cápsula */
   .subdivision-badge {
-    @apply px-4 py-2 rounded-md font-semibold text-sm;
+    @apply px-4 py-2 rounded-full font-semibold text-sm;
     background: hsl(var(--secondary));
     color: hsl(var(--secondary-foreground));
   }
 
-  /* Card de subdivisión */
+  /* Card de subdivisión - estilo cápsula */
   .subdivision-card {
-    @apply bg-card rounded-lg border border-border shadow-sm transition-all duration-200;
+    @apply bg-card rounded-full border border-border shadow-sm transition-all duration-200 overflow-hidden;
   }
 
   .subdivision-card:hover {
@@ -171,20 +176,9 @@
     @apply bg-muted-foreground/30;
   }
 
-  /* Botón subdividir */
-  .btn-subdividir {
-    @apply px-6 py-2 rounded-md font-medium transition-all;
-    background: hsl(var(--secondary));
-    color: hsl(var(--secondary-foreground));
-  }
-
-  .btn-subdividir:hover {
-    background: hsl(var(--primary));
-  }
-
   /* Sidebar navegación */
   .sidebar-nav-item {
-    @apply flex items-center justify-center w-10 h-10 rounded-md transition-colors;
+    @apply flex items-center justify-center w-10 h-10 rounded-lg transition-colors;
   }
 
   .sidebar-nav-item:hover {
@@ -194,6 +188,25 @@
   .sidebar-nav-item.active {
     @apply bg-sidebar-accent;
     border-left: 3px solid hsl(var(--chart));
+  }
+
+  /* Botones redondeados */
+  .btn-rounded {
+    @apply rounded-full;
+  }
+
+  /* Navigation bullets */
+  .nav-bullet {
+    @apply w-3 h-3 rounded-full transition-all cursor-pointer;
+    background: hsl(var(--destructive));
+  }
+
+  .nav-bullet:hover {
+    @apply scale-125;
+  }
+
+  .nav-bullet.active {
+    @apply scale-125;
   }
 
   /* Animaciones */
