@@ -14,7 +14,7 @@ interface ItemsModalProps {
   isOpen: boolean;
   onClose: () => void;
   items: ItemPartida[];
-  onItemsAdded: (items: ItemPartida[], cantidadParcial: Record<string, number>) => void;
+  onItemsAdded: (items: ItemPartida[], cantidadParcial: Record<string, number>, parcialItems: Record<string, boolean>) => void;
 }
 
 /**
@@ -58,7 +58,7 @@ export function ItemsModal({ isOpen, onClose, items, onItemsAdded }: ItemsModalP
     );
     
     // Notificar al padre los items agregados con sus cantidades parciales
-    onItemsAdded(itemsToAdd, cantidadParcial);
+    onItemsAdded(itemsToAdd, cantidadParcial, parcialItems);
     
     // Limpiar selección
     setSelectedItems([]);

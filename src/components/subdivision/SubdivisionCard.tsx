@@ -25,12 +25,12 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
   const tienePedimento = subdivision.numeropedimento && subdivision.numeropedimento.length > 0;
 
   return (
-    <div className="mb-3 bg-card rounded-full border border-border shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md">
+    <div className={`mb-3 bg-card border border-border shadow-sm overflow-hidden transition-all duration-200 hover:shadow-md ${isExpanded ? 'rounded-lg' : 'rounded-full'}`}>
       {/* Contenido principal de la tarjeta */}
-      <div className="flex flex-col sm:flex-row items-center gap-4 p-3 pl-0">
+      <div className="flex flex-col sm:flex-row items-center gap-2 p-1 pl-0">
         {/* Badge de subdivisión con borde izquierdo #634db0 */}
         <div 
-          className="min-w-[100px] text-center py-3 px-4 rounded-full font-semibold text-sm text-white"
+          className="min-w-[60px] text-center py-2 px-3 rounded-full font-semibold text-xs text-white"
           style={{ backgroundColor: "#634DB0" }}
         >
           {subdivision.clave}
@@ -64,7 +64,10 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-muted-foreground hover:text-foreground flex items-center gap-1 rounded-full"
+            className="flex items-center gap-1 rounded-full text-foreground"
+            style={{ backgroundColor: "#e0e0e0" }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#bdbdbd"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#e0e0e0"}
           >
             {isExpanded ? (
               <>Ver menos <ChevronUp size={16} /></>
@@ -77,7 +80,7 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
 
       {/* Tabla detallada de items (expandible) */}
       {isExpanded && subdivision.itemsasociados.length > 0 && (
-        <div className="border-t border-border p-4 animate-fade-in bg-muted/10 rounded-b-2xl">
+        <div className="border-t border-border p-4 animate-fade-in bg-muted/10">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
