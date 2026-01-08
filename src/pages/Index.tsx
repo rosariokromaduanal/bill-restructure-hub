@@ -20,8 +20,31 @@ const Index = () => {
     setData(subdivisionData as SubdivisionData);
   }, []);
 
-  const handleItemsAdded = (items: ItemPartida[], cantidadParcial: Record<string, number>) => {
-    console.log("Items agregados:", items, "Cantidades:", cantidadParcial);
+  const handleItemsAdded = (items: ItemPartida[], cantidadParcial: Record<string, number>, parcialItems: Record<string, boolean>) => {
+    if (!data) return;
+    
+    // Procesar items parciales y generar los sobrantes automáticamente
+    const newItems: ItemPartida[] = [];
+    items.forEach(item => {
+      if (parcialItems[item.objectidproductos]) {
+        const cantidadUsada = cantidadParcial[item.objectidproductos] || 0;
+        const cantidadRestante = item.cantidadcomercialpartida - cantidadUsada;
+        
+        if (cantidadRestante > 0) {
+          // Crear item con cantidad restante
+          const itemRestante: ItemPartida = {
+            ...item,
+            objectidproductos: `${item.objectidproductos}_restante`,
+            cantidadcomercialpartida: cantidadRestante,
+            cantidadfacturapartida: cantidadRestante,
+            valormercanciapartida: (item.valormercanciapartida / item.cantidadcomercialpartida) * cantidadRestante
+          };
+          newItems.push(itemRestante);
+        }
+      }
+    });
+    
+    console.log("Items agregados:", items, "Items restantes generados:", newItems);
   };
 
   const handleSectionChange = (section: number) => {

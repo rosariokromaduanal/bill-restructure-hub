@@ -30,7 +30,8 @@ export function ActionButtons() {
       <Button
         variant="ghost"
         size="sm"
-        className="rounded-none text-muted-foreground hover:text-foreground hover:bg-muted/50 px-3 h-9 border-r border-border"
+        className="rounded-none px-3 h-9 border-r border-border hover:opacity-80"
+        style={{ backgroundColor: "#634DB0", color: "#ffffff" }}
         title="Deshacer"
       >
         <RotateCcw size={16} />
@@ -40,7 +41,8 @@ export function ActionButtons() {
       <Button
         variant="ghost"
         size="sm"
-        className="rounded-none text-muted-foreground hover:text-destructive hover:bg-muted/50 px-3 h-9 border-r border-border"
+        className="rounded-none px-3 h-9 border-r border-border hover:opacity-80"
+        style={{ backgroundColor: "#634DB0", color: "#ffffff" }}
         title="Eliminar o archivar"
       >
         <Trash2 size={16} />
