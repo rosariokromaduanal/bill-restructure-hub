@@ -13,7 +13,7 @@ export function PageHeader() {
         <button className="transition-colors" style={{ color: "#BDBDBD" }}>
           <Pin size={24} />
         </button>
-        <h1 className="text-xl text-foreground">
+        <h1 className="text-3xl text-foreground">
           <span style={{ color: "#634DB0" }}>Subdivisión</span>{" "}
           <span className="font-bold" style={{ color: "#79145C" }}>factura comercial</span>
         </h1>
