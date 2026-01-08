@@ -30,7 +30,7 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
       <div className="flex flex-col sm:flex-row items-center gap-2 p-1 pl-0">
         {/* Badge de subdivisión con borde izquierdo #634db0 */}
         <div
-          className={`min-w-[60px] text-center py-2 px-3 text-xs text-white ${isExpanded ? 'rounded-l-full' : 'rounded-full'}`}
+          className={`min-w-[60px] text-center py-2 px-3 text-xs text-white rounded-l-full}`}
           style={{ backgroundColor: "#634DB0" }}
         >
           {subdivision.clave}
