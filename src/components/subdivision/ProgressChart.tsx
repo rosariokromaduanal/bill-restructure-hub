@@ -12,7 +12,7 @@ interface ProgressChartProps {
 export function ProgressChart({
   percentage,
   size = 284,
-  strokeWidth = 20
+  strokeWidth = 40
 }: ProgressChartProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
@@ -87,14 +87,14 @@ export function ProgressChart({
       {/* Texto del porcentaje */}
       <div className="absolute inset-0 flex items-center justify-center">
         {isEmpty ? (
-          <span className="text-4xl text-muted-foreground/50">0%</span>
+          <span className="text-6xl text-muted-foreground/50">0%</span>
         ) : isComplete ? (
           <div className="text-center">
-            <span className="text-4xl text-secondary">100%</span>
+            <span className="text-6xl text-secondary">100%</span>
             <p className="text-xs text-accent">Completo</p>
           </div>
         ) : (
-          <span className="text-4xl text-secondary">
+          <span className="text-6xl text-secondary">
             {percentage}%
           </span>
         )}
