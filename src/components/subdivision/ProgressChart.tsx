@@ -11,7 +11,7 @@ interface ProgressChartProps {
  */
 export function ProgressChart({
   percentage,
-  size = 250,
+  size = 220,
   strokeWidth = 25
 }: ProgressChartProps) {
   const radius = (size - strokeWidth) / 2;
