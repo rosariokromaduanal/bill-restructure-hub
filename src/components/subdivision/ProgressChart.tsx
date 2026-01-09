@@ -8,6 +8,7 @@ interface ProgressChartProps {
  * Gráfica circular de progreso con gradiente
  * Muestra el porcentaje utilizado de la factura
  * Gradiente cambiante conforme avanza el porcentaje
+ * Responsive para diferentes tamaños de pantalla
  */
 export function ProgressChart({
   percentage,
@@ -26,12 +27,23 @@ export function ProgressChart({
   const isEmpty = percentage === 0;
   const isComplete = percentage >= 100;
 
+  // Tamaño responsive del texto
+  const getTextSize = () => {
+    if (typeof window === "undefined") return "text-3xl";
+    const width = window.innerWidth;
+    if (width < 640) return "text-2xl";
+    if (width < 768) return "text-3xl";
+    return "text-5xl";
+  };
+
   return (
-    <div className="relative inline-flex items-center justify-center">
+    <div className="relative inline-flex items-center justify-center w-32 sm:w-40 md:w-56">
       <svg
         width={size}
         height={size}
         className="progress-ring"
+        viewBox={`0 0 ${size} ${size}`}
+        preserveAspectRatio="xMidYMid meet"
       >
         {/* Definición del gradiente */}
         <defs>
@@ -87,14 +99,14 @@ export function ProgressChart({
       {/* Texto del porcentaje */}
       <div className="absolute inset-0 flex items-center justify-center">
         {isEmpty ? (
-          <span className="text-5xl text-muted-foreground/50">0%</span>
+          <span className="text-2xl sm:text-3xl md:text-5xl text-muted-foreground/50">0%</span>
         ) : isComplete ? (
           <div className="text-center">
-            <span className="text-5xl text-secondary">100%</span>
+            <span className="text-2xl sm:text-3xl md:text-5xl text-secondary">100%</span>
             <p className="text-xs text-accent">Completo</p>
           </div>
         ) : (
-          <span className="text-5xl text-secondary">
+          <span className="text-2xl sm:text-3xl md:text-5xl text-secondary">
             {percentage}%
           </span>
         )}
