@@ -37,28 +37,28 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
         </div>
 
         {/* LADO DERECHO - 50% - Información del cliente y datos */}
-        <div className="flex flex-col justify-between space-y-3 sm:space-y-4">
+        <div className="flex flex-col justify-between space-y-3 sm:space-y-4 relative">
+          {/* Indicador de días con candado - Siempre en esquina superior derecha */}
+          <div className="absolute top-0 right-0 flex items-center gap-2 sm:static">
+            {isComplete ? (
+              <Lock size={18} className="sm:w-6 sm:h-6 text-secondary" />
+            ) : (
+              <LockOpen size={18} className="sm:w-6 sm:h-6 text-secondary" />
+            )}
+            <span className="text-sm sm:text-2xl md:text-3xl text-secondary">2 d</span>
+          </div>
+
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             {/* Cliente y proveedor */}
-            <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
+            <div className="space-y-2 sm:space-y-3 text-center sm:text-left">
               <div>
                 <span className="text-muted-foreground/70 text-xs">Cliente</span>
-                <p className="font-medium text-foreground text-sm sm:text-base">{data.cliente}</p>
+                <p className="font-medium text-foreground text-xs sm:text-base">{data.cliente}</p>
               </div>
               <div>
                 <span className="text-muted-foreground/70 text-xs">Proveedor</span>
-                <p className="font-medium text-foreground text-sm sm:text-base">{data.proveedor}</p>
+                <p className="font-medium text-foreground text-xs sm:text-base">{data.proveedor}</p>
               </div>
-            </div>
-
-            {/* Indicador de días con candado */}
-            <div className="flex items-center gap-2">
-              {isComplete ? (
-                <Lock size={20} className="sm:w-6 sm:h-6 text-secondary" />
-              ) : (
-                <LockOpen size={20} className="sm:w-6 sm:h-6 text-secondary" />
-              )}
-              <span className="text-lg sm:text-2xl md:text-3xl text-secondary">2 d</span>
             </div>
           </div>
 

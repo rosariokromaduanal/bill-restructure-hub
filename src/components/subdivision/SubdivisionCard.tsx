@@ -27,17 +27,17 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
   return (
     <div className={`mb-2 sm:mb-3 bg-card border border-border shadow-sm transition-all duration-200 hover:shadow-md`}>
       {/* Contenido principal de la tarjeta */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 p-2 sm:p-1 pl-0">
-        {/* Badge de subdivisión con borde izquierdo #634db0 */}
+      <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 p-2 sm:p-1 pl-0">
+        {/* Badge de subdivisión sin redondeado */}
         <div
-          className={`min-w-[50px] sm:min-w-[60px] text-center py-2 sm:py-3 px-3 sm:px-5 text-xs text-white rounded-l-full`}
+          className={`min-w-[50px] sm:min-w-[60px] text-center py-2 sm:py-3 px-3 sm:px-5 text-xs text-white`}
           style={{ backgroundColor: "#634DB0" }}
         >
           {subdivision.clave}
         </div>
 
         {/* Información de la subdivisión */}
-        <div className="flex-1 flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
+        <div className="flex-1 flex flex-col sm:flex-row sm:flex-wrap items-center sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground justify-center sm:justify-start">
           <span className="font-mono">111 294 90</span>
           <span className="font-mono hidden sm:inline">8503.00.99</span>
           <span className="truncate max-w-full sm:max-w-[200px] text-xs">
@@ -46,7 +46,7 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
         </div>
 
         {/* Estado y pedimento */}
-        <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto justify-end">
+        <div className="flex items-center gap-1 sm:gap-4 w-full sm:w-auto justify-end">
           {/* Indicador de estado */}
           <div className={tienePedimento ? "text-accent" : "text-muted-foreground/30"}>
             <RefreshCcw size={14} className="sm:w-4.5 sm:h-4.5" />
@@ -59,18 +59,19 @@ export function SubdivisionCard({ subdivision }: SubdivisionCardProps) {
             </span>
           )}
 
-          {/* Botón ver más/menos */}
+          {/* Botón solo icono */}
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center gap-1 rounded-full text-foreground text-xs sm:text-sm transition-opacity hover:opacity-70 p-1 sm:p-2"
+            className="flex items-center justify-center rounded-md text-foreground transition-opacity hover:opacity-70 p-1 sm:p-2"
             style={{ backgroundColor: "#e0e0e0" }}
+            title={isExpanded ? "Ver menos" : "Ver más"}
           >
             {isExpanded ? (
-              <>Ver menos <ChevronUp className="sm:w-4 sm:h-4" size={12} /></>
+              <ChevronUp className="w-4 h-4 sm:w-4 sm:h-4" size={12} />
             ) : (
-              <>Ver más <ChevronDown className="sm:w-4 sm:h-4" size={12} /></>
+              <ChevronDown className="w-4 h-4 sm:w-4 sm:h-4" size={12} />
             )}
           </Button>
         </div>
