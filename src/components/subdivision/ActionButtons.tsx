@@ -22,7 +22,7 @@ export function ActionButtons() {
         className="rounded-none border-r border-white/20 flex items-center gap-1 px-4 h-9"
         style={{ backgroundColor: "#331289" }}
       >
-        <Plus size={16} background={"#b2b2b2"}/>
+        <Plus size={16} style={{ backgroundColor: "#b2b2b2", color: "#ffffff" }}/>
         <span className="hidden sm:inline">Guardar</span>
       </Button>
 
@@ -42,7 +42,7 @@ export function ActionButtons() {
         variant="ghost"
         size="sm"
         className="rounded-none px-3 h-9 border-r border-border hover:opacity-80"
-        style={{ backgroundColor: "#634DB0", color: "#ffffff" }}
+        style={{ backgroundColor: "#331289", color: "#ffffff" }}
         title="Eliminar o archivar"
       >
         <Trash2 size={16} />
