@@ -24,16 +24,6 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
 
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card p-4 sm:p-6">
-      {/* Indicador de días con candado - FIJO en esquina superior derecha */}
-      <div className="fixed top-6 right-6 sm:top-auto sm:right-auto flex items-center gap-2 z-50 sm:z-auto">
-        {isComplete ? (
-          <Lock size={22} className="sm:w-7 sm:h-7 text-secondary" />
-        ) : (
-          <LockOpen size={22} className="sm:w-7 sm:h-7 text-secondary" />
-        )}
-        <span className="text-sm sm:text-2xl md:text-3xl text-secondary">{data.diasrestantes || 2} d</span>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* LADO IZQUIERDO - 50% - Gráfica y número de factura */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-3 sm:gap-6 lg:border-r lg:border-border lg:pr-6">
@@ -47,7 +37,17 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
         </div>
 
         {/* LADO DERECHO - 50% - Información del cliente y datos */}
-        <div className="flex flex-col justify-between space-y-3 sm:space-y-4">
+        <div className="flex flex-col justify-between space-y-3 sm:space-y-4 relative">
+          {/* Indicador de días con candado - FIJO en esquina superior izquierda */}
+          <div className="absolute -top-2 -left-4 sm:static flex items-center gap-2 z-40">
+            {isComplete ? (
+              <Lock size={22} className="sm:w-7 sm:h-7 text-secondary" />
+            ) : (
+              <LockOpen size={22} className="sm:w-7 sm:h-7 text-secondary" />
+            )}
+            <span className="text-sm sm:text-2xl md:text-3xl text-secondary">{data.diasrestantes || 2} d</span>
+          </div>
+
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             {/* Cliente y proveedor */}
             <div className="space-y-2 sm:space-y-3 text-center sm:text-left">

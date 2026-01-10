@@ -69,7 +69,7 @@ export function SubdivisionsList({ subdivisions }: SubdivisionsListProps) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-foreground">Subdivisiones</h2>
+      <h2 className="text-lg sm:text-lg md:text-xl font-semibold text-foreground" style={{ color: "#757575" }}>Subdivisiones</h2>
       
       {/* Lista de tarjetas */}
       <div className="space-y-2">
