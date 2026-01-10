@@ -31,7 +31,7 @@ export function ActionButtons() {
         variant="ghost"
         size="sm"
         className="rounded-none px-3 h-9 border-r border-border hover:opacity-80"
-        style={{ backgroundColor: "#634DB0", color: "#ffffff" }}
+        style={{ backgroundColor: "#331289", color: "#ffffff" }}
         title="Deshacer"
       >
         <RotateCcw size={16} />
