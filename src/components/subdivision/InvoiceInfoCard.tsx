@@ -39,7 +39,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
         {/* LADO DERECHO - 50% - Información del cliente y datos */}
         <div className="flex flex-col justify-between space-y-3 sm:space-y-4 relative">
           {/* Indicador de días con candado - FIJO en esquina superior izquierda */}
-          <div className="absolute -top-2 -left-4 sm:static flex items-center gap-2 z-40">
+          <div className="absolute -top-2 -left-0 sm:static flex items-center gap-2 z-40">
             {isComplete ? (
               <Lock size={22} className="sm:w-7 sm:h-7 text-secondary" />
             ) : (
