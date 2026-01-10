@@ -20,7 +20,7 @@ export function ActionButtons() {
         variant="default"
         size="sm"
         className="rounded-none border-r border-white/20 flex items-center gap-1 px-4 h-9"
-        style={{ backgroundColor: "#634DB0" }}
+        style={{ backgroundColor: "#331289" }}
       >
         <Plus size={16} />
         <span className="hidden sm:inline">Guardar</span>
