@@ -23,7 +23,17 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
   const isComplete = data.porcentajeutilizadofactura >= 100;
 
   return (
-    <div className="bg-card rounded-2xl border border-border shadow-card p-4 sm:p-6">
+    <div className="bg-card rounded-2xl border border-border shadow-card p-4 sm:p-6 relative">
+      {/* Indicador de días con candado - FIJO en esquina superior derecha */}
+      <div className="absolute -top-2 -right-2 sm:top-4 sm:right-4 flex items-center gap-2 z-40">
+        {isComplete ? (
+          <Lock size={22} className="sm:w-7 sm:h-7 text-secondary" />
+        ) : (
+          <LockOpen size={22} className="sm:w-7 sm:h-7 text-secondary" />
+        )}
+        <span className="text-sm sm:text-2xl md:text-3xl text-secondary">{data.diasrestantes || 2} d</span>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* LADO IZQUIERDO - 50% - Gráfica y número de factura */}
         <div className="flex flex-col lg:flex-row items-center justify-center gap-3 sm:gap-6 lg:border-r lg:border-border lg:pr-6">
@@ -37,17 +47,7 @@ export function InvoiceInfoCard({ data, onSubdividir }: InvoiceInfoCardProps) {
         </div>
 
         {/* LADO DERECHO - 50% - Información del cliente y datos */}
-        <div className="flex flex-col justify-between space-y-3 sm:space-y-4 relative">
-          {/* Indicador de días con candado - FIJO en esquina superior izquierda */}
-          <div className="absolute -top-2 -left-0 sm:static flex items-center gap-2 z-40">
-            {isComplete ? (
-              <Lock size={22} className="sm:w-7 sm:h-7 text-secondary" />
-            ) : (
-              <LockOpen size={22} className="sm:w-7 sm:h-7 text-secondary" />
-            )}
-            <span className="text-sm sm:text-2xl md:text-3xl text-secondary">{data.diasrestantes || 2} d</span>
-          </div>
-
+        <div className="flex flex-col justify-between space-y-3 sm:space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
             {/* Cliente y proveedor */}
             <div className="space-y-2 sm:space-y-3 text-center sm:text-left">
