@@ -19,19 +19,22 @@ const offices = [
   "Tampico",
 ];
 
+interface AppHeaderProps {
+  onSearch?: (invoiceNumber: string) => void;
+}
+
 /**
  * Header principal de la aplicación
  * Contiene logo, búsqueda funcional, selector de ubicación
  */
-export function AppHeader() {
+export function AppHeader({ onSearch }: AppHeaderProps) {
   const [selectedOffice, setSelectedOffice] = useState("Veracruz");
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchValue.trim()) {
-      console.log("Buscando factura:", searchValue);
-      // Aquí se conectará con MongoDB más adelante
+    if (searchValue.trim() && onSearch) {
+      onSearch(searchValue);
     }
   };
 

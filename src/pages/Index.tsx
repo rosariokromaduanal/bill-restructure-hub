@@ -80,7 +80,7 @@ const Index = () => {
   };
 
   return (
-    <MainLayout activeSection={activeSection} onSectionChange={handleSectionChange} totalSections={3}>
+    <MainLayout activeSection={activeSection} onSectionChange={handleSectionChange} totalSections={3} onSearch={handleSearch}>
       <PageHeader />
       <GeneralesSection 
         isExpanded={isGeneralesExpanded} 
@@ -91,7 +91,6 @@ const Index = () => {
           <InvoiceInfoCard 
             data={data} 
             onSubdividir={() => setIsModalOpen(true)} 
-            onSearch={handleSearch}
             isLoaded={isLoaded}
           />
         </div>

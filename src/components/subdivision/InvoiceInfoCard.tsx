@@ -3,13 +3,10 @@ import { ChevronUp, ChevronDown, LockOpen } from "lucide-react";
 import { ProgressChart } from "./ProgressChart";
 import { Button } from "@/components/ui/button";
 import { SubdivisionData } from "@/types/subdivision";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 
 interface InvoiceInfoCardProps {
   data: SubdivisionData | null;
   onSubdividir: () => void;
-  onSearch: (invoiceNumber: string) => void;
   isLoaded: boolean;
 }
 
@@ -17,26 +14,13 @@ interface InvoiceInfoCardProps {
  * Card de información general de la factura
  * Layout 50/50: Lado izquierdo gráfica, lado derecho datos
  */
-export function InvoiceInfoCard({ data, onSubdividir, onSearch, isLoaded }: InvoiceInfoCardProps) {
+export function InvoiceInfoCard({ data, onSubdividir, isLoaded }: InvoiceInfoCardProps) {
   const [showMoreInfo, setShowMoreInfo] = useState(true);
-  const [searchValue, setSearchValue] = useState("");
 
   // Valores por defecto cuando no hay datos
   const montoUtilizado = isLoaded && data ? data.montoutilizadofactura.split(" ")[0] : "0";
   const totalFactura = isLoaded && data ? data.totalfactura.split(" ")[0] : "0";
   const percentage = isLoaded && data ? data.porcentajeutilizadofactura : 0;
-
-  const handleSearch = () => {
-    if (searchValue.trim()) {
-      onSearch(searchValue);
-    }
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
 
   return (
     <div className="bg-card rounded-2xl border border-border shadow-card p-4 sm:p-6 relative">
@@ -51,23 +35,10 @@ export function InvoiceInfoCard({ data, onSubdividir, onSearch, isLoaded }: Invo
         <div className="flex flex-col lg:flex-row items-center justify-center gap-3 sm:gap-6 lg:border-r lg:border-border lg:pr-6">
           <ProgressChart percentage={percentage} emptyColor={!isLoaded} />
           <div className="pl-2 sm:pl-5 text-center lg:text-left">
-            {isLoaded && data ? (
+            {isLoaded && data && (
               <p className="text-lg sm:text-2xl md:text-4xl italic" style={{ color: "#79145C" }}>
                 {data.numerofactura.replace("E007355E24", "2024/4607")}
               </p>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Input
-                  placeholder="Buscar factura..."
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  className="text-sm w-32 sm:w-40"
-                />
-                <Button size="icon" variant="ghost" onClick={handleSearch}>
-                  <Search size={18} style={{ color: "#79145C" }} />
-                </Button>
-              </div>
             )}
             <p className="text-base sm:text-lg md:text-3xl mt-2"><span className="font-bold">Factura</span><br/> aplicada</p>
           </div>
