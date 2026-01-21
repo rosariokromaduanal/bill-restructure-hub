@@ -5,90 +5,52 @@ import { DetalleSubdivision } from "@/types/subdivision";
 
 interface SubdivisionsListProps {
   subdivisions: DetalleSubdivision[];
+  isLoaded: boolean;
 }
 
 /**
  * Lista de subdivisiones con paginación
  * Muestra las tarjetas individuales de cada subdivisión
  */
-export function SubdivisionsList({ subdivisions }: SubdivisionsListProps) {
+export function SubdivisionsList({ subdivisions, isLoaded }: SubdivisionsListProps) {
   const [visibleCount, setVisibleCount] = useState(5);
 
-  // Subdivisiones adicionales para simular más datos según la maqueta
-  const allSubdivisions: DetalleSubdivision[] = [
-    ...subdivisions,
-    {
-      sec: 3,
-      clave: "SUB03",
-      descripciongeneral: "1342459 ALAMBRE CIRCULAR...",
-      numeropedimento: "234339453003221",
-      fechaasociacionpedimento: "2024-12-27",
-      estado: 1,
-      itemsasociados: subdivisions[0]?.itemsasociados || []
-    },
-    {
-      sec: 4,
-      clave: "SUB04",
-      descripciongeneral: "1342460 ALAMBRE CIRCULAR...",
-      numeropedimento: "234339453003221",
-      fechaasociacionpedimento: "2024-12-27",
-      estado: 1,
-      itemsasociados: []
-    },
-    {
-      sec: 5,
-      clave: "SUB05",
-      descripciongeneral: "1342461 ALAMBRE CIRCULAR...",
-      numeropedimento: "234339453003221",
-      fechaasociacionpedimento: "2024-12-27",
-      estado: 1,
-      itemsasociados: []
-    },
-    {
-      sec: 6,
-      clave: "SUB07",
-      descripciongeneral: "1342462 ALAMBRE CIRCULAR...",
-      numeropedimento: "234339453003221",
-      fechaasociacionpedimento: "2024-12-27",
-      estado: 1,
-      itemsasociados: []
-    },
-    {
-      sec: 7,
-      clave: "SUB08",
-      descripciongeneral: "1342463 ALAMBRE CIRCULAR...",
-      numeropedimento: "",
-      fechaasociacionpedimento: "",
-      estado: 0,
-      itemsasociados: []
-    },
-  ];
-
-  const visibleSubdivisions = allSubdivisions.slice(0, visibleCount);
-  const hasMore = visibleCount < allSubdivisions.length;
+  const visibleSubdivisions = subdivisions.slice(0, visibleCount);
+  const hasMore = visibleCount < subdivisions.length;
 
   return (
     <div className="space-y-4">
       <h2 className="text-lg sm:text-lg md:text-xl font-semibold text-foreground" style={{ color: "#757575" }}>Subdivisiones</h2>
       
-      {/* Lista de tarjetas */}
-      <div className="space-y-2">
-        {visibleSubdivisions.map((subdivision) => (
-          <SubdivisionCard key={subdivision.clave} subdivision={subdivision} />
-        ))}
-      </div>
-
-      {/* Botón mostrar más */}
-      {hasMore && (
-        <div className="flex justify-center pt-4">
-          <Button
-            variant="ghost"
-            onClick={() => setVisibleCount((prev) => prev + 5)}
-            className="text-secondary"
-          >
-            Mostrar siguientes
-          </Button>
+      {/* Estado vacío cuando no hay subdivisiones */}
+      {subdivisions.length === 0 ? (
+        <div className="flex justify-center py-8">
+          <span className="text-center" style={{ color: "#321761", fontSize: "12px" }}>
+            Aún no generadas
+          </span>
         </div>
+      ) : (
+        <>
+          {/* Lista de tarjetas */}
+          <div className="space-y-2">
+            {visibleSubdivisions.map((subdivision) => (
+              <SubdivisionCard key={subdivision.clave} subdivision={subdivision} />
+            ))}
+          </div>
+
+          {/* Botón mostrar más */}
+          {hasMore && (
+            <div className="flex justify-center pt-4">
+              <Button
+                variant="ghost"
+                onClick={() => setVisibleCount((prev) => prev + 5)}
+                className="text-secondary"
+              >
+                Mostrar siguientes
+              </Button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

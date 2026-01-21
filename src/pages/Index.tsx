@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { PageHeader, GeneralesSection } from "@/components/subdivision/PageHeader";
 import { InvoiceInfoCard } from "@/components/subdivision/InvoiceInfoCard";
 import { SubdivisionsList } from "@/components/subdivision/SubdivisionsList";
 import { ItemsModal } from "@/components/subdivision/ItemsModal";
-import { SubdivisionData, ItemPartida } from "@/types/subdivision";
+import { SubdivisionData, ItemPartida, DetalleSubdivision } from "@/types/subdivision";
 import subdivisionData from "@/data/ModeladoSubdivision.json";
 
 /**
@@ -12,16 +12,44 @@ import subdivisionData from "@/data/ModeladoSubdivision.json";
  */
 const Index = () => {
   const [data, setData] = useState<SubdivisionData | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isGeneralesExpanded, setIsGeneralesExpanded] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [subdivisions, setSubdivisions] = useState<DetalleSubdivision[]>([]);
 
-  useEffect(() => {
+  const handleSearch = (invoiceNumber: string) => {
+    // Simular búsqueda - cargar datos cuando se busca
+    console.log("Buscando factura:", invoiceNumber);
     setData(subdivisionData as SubdivisionData);
-  }, []);
+    setIsLoaded(true);
+    // Las subdivisiones empiezan vacías, solo se agregan desde el modal
+    setSubdivisions([]);
+  };
 
   const handleItemsAdded = (items: ItemPartida[], cantidadParcial: Record<string, number>, parcialItems: Record<string, boolean>) => {
     if (!data) return;
+    
+    // Crear nueva subdivisión con los items seleccionados
+    const newSubdivision: DetalleSubdivision = {
+      sec: subdivisions.length + 1,
+      clave: `SUB${String(subdivisions.length + 1).padStart(2, '0')}`,
+      descripciongeneral: items[0]?.descripcionpartepartidaoriginal?.substring(0, 30) + "..." || "Nueva subdivisión",
+      numeropedimento: "",
+      fechaasociacionpedimento: "",
+      estado: 0,
+      itemsasociados: items.map(item => {
+        const isParcial = parcialItems[item.objectidproductos];
+        const cantidadUsada = cantidadParcial[item.objectidproductos] || item.cantidadcomercialpartida;
+        return {
+          ...item,
+          cantidadcomercialpartida: isParcial ? cantidadUsada : item.cantidadcomercialpartida,
+          cantidadfacturapartida: isParcial ? cantidadUsada : item.cantidadfacturapartida,
+        };
+      })
+    };
+
+    setSubdivisions(prev => [...prev, newSubdivision]);
     
     // Procesar items parciales y generar los sobrantes automáticamente
     const newItems: ItemPartida[] = [];
@@ -51,16 +79,6 @@ const Index = () => {
     setActiveSection(section);
   };
 
-  if (!data) {
-    return (
-      <MainLayout activeSection={0} onSectionChange={() => {}} totalSections={3}>
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-pulse text-muted-foreground">Cargando...</div>
-        </div>
-      </MainLayout>
-    );
-  }
-
   return (
     <MainLayout activeSection={activeSection} onSectionChange={handleSectionChange} totalSections={3}>
       <PageHeader />
@@ -70,16 +88,23 @@ const Index = () => {
       />
       {isGeneralesExpanded && (
         <div className="mb-8 animate-fade-in">
-          <InvoiceInfoCard data={data} onSubdividir={() => setIsModalOpen(true)} />
+          <InvoiceInfoCard 
+            data={data} 
+            onSubdividir={() => setIsModalOpen(true)} 
+            onSearch={handleSearch}
+            isLoaded={isLoaded}
+          />
         </div>
       )}
-      <SubdivisionsList subdivisions={data.detallesubdivision} />
-      <ItemsModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        items={data.facturaoriginal.items}
-        onItemsAdded={handleItemsAdded}
-      />
+      <SubdivisionsList subdivisions={subdivisions} isLoaded={isLoaded} />
+      {data && (
+        <ItemsModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          items={data.facturaoriginal.items}
+          onItemsAdded={handleItemsAdded}
+        />
+      )}
     </MainLayout>
   );
 };
