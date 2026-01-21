@@ -2,6 +2,7 @@ interface ProgressChartProps {
   percentage: number;
   size?: number;
   strokeWidth?: number;
+  emptyColor?: boolean;
 }
 
 /**
@@ -13,7 +14,8 @@ interface ProgressChartProps {
 export function ProgressChart({
   percentage,
   size = 220,
-  strokeWidth = 25
+  strokeWidth = 25,
+  emptyColor = false
 }: ProgressChartProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
@@ -27,14 +29,8 @@ export function ProgressChart({
   const isEmpty = percentage === 0;
   const isComplete = percentage >= 100;
 
-  // Tamaño responsive del texto
-  const getTextSize = () => {
-    if (typeof window === "undefined") return "text-3xl";
-    const width = window.innerWidth;
-    if (width < 640) return "text-2xl";
-    if (width < 768) return "text-3xl";
-    return "text-5xl";
-  };
+  // Color del texto cuando está vacío o sin datos
+  const textColor = emptyColor || isEmpty ? "#757575" : undefined;
 
   return (
     <div className="relative inline-flex items-center justify-center w-32 sm:w-40 md:w-56">
@@ -63,12 +59,12 @@ export function ProgressChart({
           cy={center}
           r={radius}
           fill="none"
-          stroke="hsl(var(--border))"
+          stroke={emptyColor ? "#757575" : "hsl(var(--border))"}
           strokeWidth={strokeWidth}
         />
 
         {/* Círculo de progreso con gradiente */}
-        {!isEmpty && (
+        {!isEmpty && !emptyColor && (
           <circle
             cx={center}
             cy={center}
@@ -83,7 +79,7 @@ export function ProgressChart({
         )}
 
         {/* Marca de completado o vacío */}
-        {isComplete && (
+        {isComplete && !emptyColor && (
           <circle
             cx={center}
             cy={center}
@@ -98,8 +94,8 @@ export function ProgressChart({
 
       {/* Texto del porcentaje */}
       <div className="absolute inset-0 flex items-center justify-center">
-        {isEmpty ? (
-          <span className="text-2xl sm:text-3xl md:text-5xl text-muted-foreground/50">0%</span>
+        {isEmpty || emptyColor ? (
+          <span className="text-2xl sm:text-3xl md:text-5xl" style={{ color: textColor }}>0%</span>
         ) : isComplete ? (
           <div className="text-center">
             <span className="text-2xl sm:text-3xl md:text-5xl text-secondary">100%</span>
