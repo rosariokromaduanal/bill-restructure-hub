@@ -154,7 +154,14 @@ export function ItemsTable({
                     <Input
                       type="number"
                       value={cantidadActual}
-                      onChange={(e) => onCantidadParcialChange(item.objectidproductos, parseFloat(e.target.value) || 0)}
+                      onChange={(e) => {
+                        const parsed = parseFloat(e.target.value);
+                        // Validate: reject NaN and Infinity values
+                        if (isNaN(parsed) || !isFinite(parsed)) return;
+                        // Clamp to valid range
+                        const validated = Math.max(0, Math.min(parsed, item.cantidadcomercialpartida));
+                        onCantidadParcialChange(item.objectidproductos, validated);
+                      }}
                       disabled={!isParcial}
                       className={`w-20 h-8 text-center rounded-lg ${
                         isParcial 
