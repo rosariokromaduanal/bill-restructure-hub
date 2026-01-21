@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AppSidebar } from "./AppSidebar";
 import { AppHeader } from "./AppHeader";
 
@@ -7,6 +6,7 @@ interface MainLayoutProps {
   activeSection?: number;
   onSectionChange?: (section: number) => void;
   totalSections?: number;
+  onSearch?: (invoiceNumber: string) => void;
 }
 
 /**
@@ -18,12 +18,13 @@ export function MainLayout({
   children, 
   activeSection = 0, 
   onSectionChange,
-  totalSections = 3 
+  totalSections = 3,
+  onSearch
 }: MainLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       <AppSidebar />
-      <AppHeader />
+      <AppHeader onSearch={onSearch} />
       
       {/* Navigation bullets - bolitas rojas #f44336 */}
       <div className="fixed left-[70px] top-1/2 -translate-y-1/2 z-30 flex flex-col gap-3">
