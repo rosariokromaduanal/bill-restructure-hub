@@ -45,9 +45,15 @@ export function ItemsModal({ isOpen, onClose, items, onItemsAdded }: ItemsModalP
   };
 
   const handleCantidadParcialChange = (itemId: string, cantidad: number) => {
+    const item = items.find(i => i.objectidproductos === itemId);
+    if (!item) return;
+    
+    // Validate: must be positive and not exceed max commercial quantity
+    const validatedCantidad = Math.max(0, Math.min(cantidad, item.cantidadcomercialpartida));
+    
     setCantidadParcial((prev) => ({
       ...prev,
-      [itemId]: cantidad,
+      [itemId]: validatedCantidad,
     }));
   };
 

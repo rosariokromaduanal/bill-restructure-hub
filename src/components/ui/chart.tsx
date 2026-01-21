@@ -58,6 +58,20 @@ const ChartContainer = React.forwardRef<
 });
 ChartContainer.displayName = "Chart";
 
+// Validates that a color string is a safe CSS color value
+const isValidCSSColor = (color: string): boolean => {
+  // Allow hex colors, rgb/rgba, hsl/hsla, and CSS variables
+  const validPatterns = /^(#[0-9a-fA-F]{3,8}|rgb\(|rgba\(|hsl\(|hsla\(|var\(--[a-zA-Z0-9-]+\))/.test(color);
+  // Ensure no dangerous characters that could break out of CSS context
+  const noInjection = !/[;{}]/.test(color);
+  return validPatterns && noInjection;
+};
+
+// Sanitizes a key to ensure it's safe for CSS variable names
+const sanitizeCSSKey = (key: string): string => {
+  return key.replace(/[^a-zA-Z0-9-_]/g, '');
+};
+
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(([_, config]) => config.theme || config.color);
 
@@ -75,8 +89,12 @@ ${prefix} [data-chart=${id}] {
 ${colorConfig
   .map(([key, itemConfig]) => {
     const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
-    return color ? `  --color-${key}: ${color};` : null;
+    // Validate color value before inserting into CSS
+    if (!color || !isValidCSSColor(color)) return null;
+    const safeKey = sanitizeCSSKey(key);
+    return `  --color-${safeKey}: ${color};`;
   })
+  .filter(Boolean)
   .join("\n")}
 }
 `,
